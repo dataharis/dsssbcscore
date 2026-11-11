@@ -1,1256 +1,216 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DSSSB TGT Computer Science — Paper 2 Learning Portal</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSSSB TGT Computer Science - Paper 2 Topics</title>
+    <style>
+        /* CSS Variables for Light/Dark Theming */
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #2d3748;
+            --header-color: #1a202c;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-text: #4a5568;
+            --card-hover-bg: #4299e1;
+            --card-hover-text: #ffffff;
+            --toggle-bg: #edf2f7;
+            --toggle-text: #2d3748;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-      }
-    };
-  </script>
-  <style>
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.4);
-      border-radius: 9999px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: rgba(100, 116, 139, 0.6);
-    }
-  </style>
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-color: #e2e8f0;
+            --header-color: #f8fafc;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --card-text: #cbd5e1;
+            --card-hover-bg: #3b82f6;
+            --card-hover-text: #ffffff;
+            --toggle-bg: #334155;
+            --toggle-text: #f8fafc;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Header Layout */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h1 {
+            color: var(--header-color);
+            margin: 0;
+            font-size: clamp(1.5rem, 4vw, 2rem); /* Responsive typography */
+        }
+
+        /* Toggle Button */
+        #theme-toggle {
+            background-color: var(--toggle-bg);
+            color: var(--toggle-text);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Grid */
+        .grid-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            /* Auto-fit ensures it drops to fewer columns on small screens */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Topic Buttons */
+        .topic-btn {
+            background-color: var(--card-bg);
+            color: var(--card-text);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            line-height: 1.4;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+        }
+
+        .topic-btn:hover {
+            background-color: var(--card-hover-bg);
+            color: var(--card-hover-text);
+            border-color: var(--card-hover-bg);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Badge/Numbering style within the button */
+        .topic-num {
+            background-color: var(--toggle-bg);
+            color: var(--text-color);
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-right: 12px;
+            font-size: 0.85rem;
+            transition: background-color 0.3s;
+        }
+
+        .topic-btn:hover .topic-num {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 600px) {
+            .header-container {
+                justify-content: center;
+                text-align: center;
+            }
+            .grid-container {
+                gap: 15px;
+            }
+            .topic-btn {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+<body>
 
-  <!-- Top Navigation Header -->
-  <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <button id="mobileMenuBtn" type="button" aria-label="Toggle Sidebar Navigation" class="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+    <div class="header-container">
+        <h1>DSSSB TGT Computer Science</h1>
+        <button id="theme-toggle">
+            <span id="theme-icon">🌙</span> 
+            <span id="theme-text">Dark Mode</span>
         </button>
-        <button id="brandHomeBtn" type="button" class="flex items-center gap-3 text-left group">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white font-bold shadow-sm group-hover:scale-105 transition-transform">
-            CS
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white">DSSSB TGT CS</span>
-              <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">Paper 2</span>
-            </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Computer Science &amp; Subject Specific Navigation Portal</p>
-          </div>
-        </button>
-      </div>
-
-      <!-- Quick Search Bar -->
-      <div class="flex-1 max-w-md mx-2 sm:mx-4">
-        <div class="relative">
-          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Jump to topic (e.g. Linux, SQL, DBMS, 14)..."
-            class="w-full pl-9 pr-8 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-transparent focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 focus:outline-none text-slate-800 dark:text-slate-100 placeholder-slate-400 transition"
-          />
-          <button id="clearSearchBtn" type="button" aria-label="Clear search" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Right Controls -->
-      <div class="flex items-center gap-2">
-        <button id="exportLinksBtn" type="button" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-          <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-          </svg>
-          <span>HTML Links</span>
-        </button>
-
-        <button id="themeToggleBtn" type="button" aria-label="Toggle Dark Mode" class="p-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-          <svg id="sunIcon" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          <svg id="moonIcon" class="w-5 h-5 block dark:hidden text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        </button>
-      </div>
     </div>
-  </header>
 
-  <!-- Main Layout Wrapper -->
-  <div class="flex-1 max-w-7xl w-full mx-auto flex relative">
-
-    <!-- Mobile Backdrop -->
-    <div id="sidebarBackdrop" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-20 hidden lg:hidden"></div>
-
-    <!-- Left Sidebar Navigation (All 20 Topics Always Accessible) -->
-    <aside id="sidebarNav" class="fixed lg:sticky top-16 left-0 z-20 w-72 h-[calc(100vh-4rem)] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out shrink-0">
-      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-        <div>
-          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Paper 2 Syllabus Index</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">16 Combined Subject Modules</p>
-        </div>
-        <button id="homeNavResetBtn" type="button" class="text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
-          All Topics
-        </button>
-      </div>
-
-      <!-- Quick Sidebar Links List -->
-      <nav id="sidebarLinksList" aria-label="Syllabus Topics Navigation" class="flex-1 overflow-y-auto custom-scrollbar p-2.5 space-y-1">
-        <!-- Populated dynamically via JS -->
-      </nav>
-
-      <!-- Sidebar Footer Progress Summary -->
-      <div class="p-3.5 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800">
-        <div class="flex items-center justify-between text-xs mb-1.5">
-          <span class="font-medium text-slate-600 dark:text-slate-300">Syllabus Progress</span>
-          <span id="sidebarProgressText" class="font-bold text-indigo-600 dark:text-indigo-400">0 / 16 Done</span>
-        </div>
-        <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-          <div id="sidebarProgressBar" class="h-full bg-indigo-600 transition-all duration-300" style="width: 0%"></div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
-
-      <!-- VIEW 1: HOME DIRECTORY VIEW -->
-      <div id="homeView" class="space-y-6">
-        <!-- Hero Banner -->
-        <section class="relative rounded-2xl overflow-hidden bg-gradient-to-r from-indigo-900 via-indigo-800 to-violet-900 text-white p-6 sm:p-8 shadow-md">
-          <div class="relative z-10 max-w-3xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-xs text-xs font-medium text-indigo-100 mb-3">
-              <span>DSSSB TGT Computer Science</span>
-              <span>&bull;</span>
-              <span>Section B / Paper 2</span>
-            </div>
-            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Computer Science &amp; Subject Specific Learning Hub
-            </h1>
-            <p class="mt-2 text-sm sm:text-base text-indigo-100/90 leading-relaxed">
-              Consolidated 16-module navigation directory (combined from all 20 syllabus topics). Select any module from the sidebar or cards below to open its page template, customize target URLs (`href`), or track your study status.
-            </p>
-            <div class="mt-5 flex flex-wrap items-center gap-3">
-              <div class="bg-white/10 backdrop-blur-xs border border-white/15 rounded-xl px-3.5 py-2 flex items-center gap-2.5">
-                <span class="text-xs text-indigo-200">Total Modules</span>
-                <span class="text-sm font-bold text-white">16 Modules (20 Topics)</span>
-              </div>
-              <div class="bg-white/10 backdrop-blur-xs border border-white/15 rounded-xl px-3.5 py-2 flex items-center gap-2.5">
-                <span class="text-xs text-indigo-200">Bookmarked</span>
-                <span id="heroBookmarkedCount" class="text-sm font-bold text-amber-300">0</span>
-              </div>
-              <div class="bg-white/10 backdrop-blur-xs border border-white/15 rounded-xl px-3.5 py-2 flex items-center gap-2.5">
-                <span class="text-xs text-indigo-200">Completed</span>
-                <span id="heroCompletedCount" class="text-sm font-bold text-emerald-300">0 / 16</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Filter & Layout Toolbar -->
-        <section class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
-          <!-- Category / Status Pills -->
-          <div id="filterPills" class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
-            <button type="button" data-filter="all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition shrink-0">
-              All Modules (16)
-            </button>
-            <button type="button" data-filter="Systems & Hardware" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition shrink-0">
-              Systems &amp; Arch
-            </button>
-            <button type="button" data-filter="Programming & DSA" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition shrink-0">
-              Coding &amp; DSA
-            </button>
-            <button type="button" data-filter="Data & Web" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition shrink-0">
-              DBMS, Web &amp; Net
-            </button>
-            <button type="button" data-filter="Allied & Maths" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition shrink-0">
-              Maths, Physics &amp; Allied
-            </button>
-            <button type="button" data-filter="bookmarked" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 transition shrink-0">
-              ★ Bookmarked
-            </button>
-          </div>
-
-          <!-- View Switcher -->
-          <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100 dark:border-slate-800">
-            <span id="showingCountLabel" class="text-xs text-slate-500 dark:text-slate-400">Showing 16 modules</span>
-            <div class="inline-flex rounded-lg p-0.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-              <button id="gridViewBtn" type="button" class="px-2.5 py-1 rounded-md text-xs font-medium bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs transition">
-                Grid Cards
-              </button>
-              <button id="listViewBtn" type="button" class="px-2.5 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition">
-                Compact Links
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- Topics Container (Grid or List) -->
-        <section id="topicsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          <!-- Populated dynamically via JS -->
-        </section>
-
-        <!-- Empty Search State -->
-        <div id="emptyState" class="hidden bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-10 text-center">
-          <p class="text-base font-semibold text-slate-700 dark:text-slate-200">No matching syllabus topic found</p>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Try clearing your search filter or searching by module number (1 to 16).</p>
-          <button id="resetFiltersBtn" type="button" class="mt-4 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition">
-            Show All 16 Modules
-          </button>
-        </div>
-      </div>
-
-      <!-- VIEW 2: TOPIC PLACEHOLDER / PAGE TEMPLATE VIEW (When user clicks a navigation item) -->
-      <div id="topicDetailView" class="hidden space-y-6">
-        <!-- Breadcrumb & Back Navigation -->
-        <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slate-900 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800">
-          <div class="flex items-center gap-2 text-xs sm:text-sm">
-            <button id="backToHomeBtn" type="button" class="inline-flex items-center gap-1.5 font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              <span>Home Directory</span>
-            </button>
-            <span class="text-slate-300 dark:text-slate-700">/</span>
-            <span id="detailBreadcrumbNumber" class="font-mono text-xs text-slate-500">Topic #1</span>
-            <span class="text-slate-300 dark:text-slate-700">/</span>
-            <span id="detailBreadcrumbTitle" class="font-semibold text-slate-800 dark:text-slate-200 truncate max-w-xs">Operating System</span>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <button id="prevTopicBtn" type="button" class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-              &larr; Prev Topic
-            </button>
-            <button id="nextTopicBtn" type="button" class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-              Next Topic &rarr;
-            </button>
-          </div>
-        </div>
-
-        <!-- Topic Header Card -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs">
-          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-            <div>
-              <div class="flex items-center gap-2 mb-2">
-                <span id="detailBadgeNumber" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">Topic 01</span>
-                <span id="detailBadgeCategory" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">Systems &amp; Hardware</span>
-              </div>
-              <h1 id="detailTitle" class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">1. Operating System</h1>
-              <p id="detailSubtext" class="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                Page stub ready to link. Configure your target HTML filename below or add quick revision pointers for this module.
-              </p>
-            </div>
-
-            <!-- Status & Bookmark Controls -->
-            <div class="flex items-center gap-2 shrink-0">
-              <select id="detailStatusSelect" aria-label="Study Status" class="px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <option value="not_started">Status: Not Started</option>
-                <option value="in_progress">Status: In Progress</option>
-                <option value="completed">Status: Completed</option>
-              </select>
-              <button id="detailBookmarkBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                ☆ Bookmark
-              </button>
-            </div>
-          </div>
-
-          <!-- Target Page Link Path Configurator -->
-          <div class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-200/80 dark:border-slate-800">
-              <label for="customUrlInput" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
-                Target Page File / URL (`href` for future page)
-              </label>
-              <div class="flex gap-2">
-                <input
-                  id="customUrlInput"
-                  type="text"
-                  class="flex-1 px-3 py-1.5 text-xs font-mono rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500"
-                />
-                <button id="saveUrlBtn" type="button" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition">
-                  Update Link
-                </button>
-              </div>
-              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
-                Ready for when you create separate HTML files. Click "HTML Links" in the top bar anytime to copy your complete navigation `&lt;ul&gt;` code.
-              </p>
-            </div>
-
-            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between">
-              <div>
-                <span class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
-                  HTML Anchor Tag Preview
-                </span>
-                <code id="anchorCodePreview" class="block text-xs font-mono p-2 rounded-lg bg-slate-900 text-emerald-400 overflow-x-auto">
-                  &lt;a href="pages/01-operating-system.html"&gt;1. Operating System&lt;/a&gt;
-                </code>
-              </div>
-              <div class="mt-2 flex justify-end">
-                <button id="copySingleAnchorBtn" type="button" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
-                  Copy `&lt;a&gt;` Tag
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Placeholder Syllabus Subtopics & Personal Notes Area -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-1 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
-            <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100 mb-3">Key Syllabus Sub-Areas</h2>
-            <ul id="detailSubtopicsList" class="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-              <!-- Populated dynamically -->
-            </ul>
-          </div>
-
-          <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 flex flex-col">
-            <div class="flex items-center justify-between mb-2">
-              <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100">Draft Page Content / Study Notes</h2>
-              <span id="noteSavedIndicator" class="text-xs text-emerald-600 dark:text-emerald-400 hidden">Saved!</span>
-            </div>
-            <textarea
-              id="detailNotesInput"
-              rows="6"
-              placeholder="Jot down links, formulas, or page structure ideas for this topic before building its dedicated page..."
-              class="w-full flex-1 p-3 text-sm rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500"
-            ></textarea>
-            <div class="mt-3 flex justify-end">
-              <button id="saveNotesBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition">
-                Save Notes for Topic
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </main>
-  </div>
-
-  <!-- Modal: Export Clean HTML Navigation Snippet -->
-  <div id="exportModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-xl flex flex-col max-h-[85vh]">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <h3 class="text-base font-bold text-slate-900 dark:text-white">Ready-to-Use HTML Navigation Snippet</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Copy this navigation list when connecting your separate topic `.html` files</p>
-        </div>
-        <button id="closeExportModalBtn" type="button" aria-label="Close modal" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-
-      <pre id="exportCodeBlock" class="my-4 p-4 rounded-xl bg-slate-950 text-slate-100 font-mono text-xs overflow-auto flex-1 custom-scrollbar"></pre>
-
-      <div class="flex items-center justify-end gap-2 pt-2">
-        <button id="copyAllHtmlBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition">
-          Copy HTML Code
-        </button>
-      </div>
+    <div class="grid-container">
+        <button class="topic-btn"><span class="topic-num">01</span> Operating System & Linux Commands</button>
+        <button class="topic-btn"><span class="topic-num">02</span> Computer Network</button>
+        <button class="topic-btn"><span class="topic-num">03</span> Number Systems, Boolean Alg & Digital Elec</button>
+        <button class="topic-btn"><span class="topic-num">04</span> DBMS, ER Modelling & SQL Queries</button>
+        <button class="topic-btn"><span class="topic-num">05</span> Programming in 'C'</button>
+        <button class="topic-btn"><span class="topic-num">06</span> C++, OOPs and Java</button>
+        <button class="topic-btn"><span class="topic-num">07</span> Data Structure and Algorithms</button>
+        <button class="topic-btn"><span class="topic-num">08</span> Software Engineering</button>
+        <button class="topic-btn"><span class="topic-num">09</span> Computer Fundamentals & MS Office</button>
+        <button class="topic-btn"><span class="topic-num">10</span> Computer Organisation & Architecture</button>
+        <button class="topic-btn"><span class="topic-num">11</span> Cyber Security, Cryptography & Cyber Laws</button>
+        <button class="topic-btn"><span class="topic-num">12</span> Web Technologies</button>
+        <button class="topic-btn"><span class="topic-num">13</span> Computer Graphics, Multimedia & Mobile Computing</button>
+        <button class="topic-btn"><span class="topic-num">14</span> MIS, DSS, Expert Systems, KM & Commerce</button>
+        <button class="topic-btn"><span class="topic-num">15</span> Engineering Maths</button>
+        <button class="topic-btn"><span class="topic-num">16</span> Physics</button>
     </div>
-  </div>
 
-  <!-- Toast Feedback -->
-  <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden px-4 py-2.5 rounded-xl bg-slate-900 dark:bg-indigo-600 text-white text-xs font-medium shadow-lg">
-    Action completed
-  </div>
-
-  <script>
-    // Consolidated 16 Modules combining all 20 original DSSSB TGT CS Paper 2 topics
-    const DEFAULT_TOPICS = [
-      {
-        id: 1,
-        numLabel: "1",
-        rawTitle: "1. Operating System & Linux Commands",
-        title: "Operating System & Linux Commands",
-        combinedFrom: "Combined: 1. Operating System + 2. Linux Commands",
-        category: "Systems & Hardware",
-        defaultHref: "pages/os.html",
-        subtopics: [
-          "Process Management, CPU Scheduling & Deadlocks",
-          "Memory Management, Virtual Memory & File Systems",
-          "Linux File/Dir Commands (ls, cp, mv, chmod, chown)",
-          "Text Filters (grep, sed, awk), Process Monitoring & Shell Basics"
-        ]
-      },
-      {
-        id: 2,
-        numLabel: "2",
-        rawTitle: "2. Computer Network",
-        title: "Computer Network",
-        combinedFrom: "Original Topic #3",
-        category: "Data & Web",
-        defaultHref: "pages/02-computer-network.html",
-        subtopics: [
-          "OSI & TCP/IP Reference Models",
-          "IPv4/IPv6 Addressing & Subnetting",
-          "Routing Algorithms & Flow Control",
-          "Application Layer Protocols (HTTP, DNS, SMTP)"
-        ]
-      },
-      {
-        id: 3,
-        numLabel: "3",
-        rawTitle: "3. Number Systems, Boolean Alg & Digital Elec",
-        title: "Number Systems, Boolean Alg & Digital Elec",
-        combinedFrom: "Combined: 4. Number System and Codes + 5. Boolean Alg and Digital Elec",
-        category: "Systems & Hardware",
-        defaultHref: "pages/03-number-systems-and-digital-electronics.html",
-        subtopics: [
-          "Binary, Octal, Hex Conversions, 1's/2's Complement, BCD, Gray & ASCII",
-          "Boolean Laws, De Morgan's Theorems & K-Map Simplification",
-          "Logic Gates & Combinational Circuits (Adders, Mux, Decoders)",
-          "Sequential Circuits (Flip-Flops, Counters & Shift Registers)"
-        ]
-      },
-      {
-        id: 4,
-        numLabel: "4",
-        rawTitle: "4. DBMS, ER Modelling & SQL Queries",
-        title: "DBMS, ER Modelling & SQL Queries",
-        combinedFrom: "Combined: 6. DBMS & ER modelling + 7. SQL & Queries",
-        category: "Data & Web",
-        defaultHref: "pages/04-dbms-er-and-sql-queries.html",
-        subtopics: [
-          "3-Schema Architecture, ER Modelling & Relational Keys/Constraints",
-          "Functional Dependencies & Normalization (1NF, 2NF, 3NF, BCNF)",
-          "SQL DDL, DML, DCL, TCL Commands & Integrity Constraints",
-          "SQL Joins, Aggregate Functions, GROUP BY/HAVING & Subqueries"
-        ]
-      },
-      {
-        id: 5,
-        numLabel: "5",
-        rawTitle: "5. Programming in 'C'",
-        title: "Programming in 'C'",
-        combinedFrom: "Original Topic #8",
-        category: "Programming & DSA",
-        defaultHref: "pages/05-programming-in-c.html",
-        subtopics: [
-          "Data Types, Operators & Control Flow Statements",
-          "Arrays, Strings & Pointer Arithmetic",
-          "Functions, Recursion & Storage Classes",
-          "Structures, Unions & File Handling in C"
-        ]
-      },
-      {
-        id: 6,
-        numLabel: "6",
-        rawTitle: "6. C++, OOPs and Java",
-        title: "C++, OOPs and Java",
-        combinedFrom: "Original Topic #9",
-        category: "Programming & DSA",
-        defaultHref: "pages/06-cpp-oops-and-java.html",
-        subtopics: [
-          "Encapsulation, Inheritance, Polymorphism & Abstraction",
-          "Constructors, Destructors & Operator Overloading",
-          "Java JVM Architecture, Interfaces & Packages",
-          "Exception Handling & Multithreading"
-        ]
-      },
-      {
-        id: 7,
-        numLabel: "7",
-        rawTitle: "7. Data Structure and Algorithms",
-        title: "Data Structure and Algorithms",
-        combinedFrom: "Original Topic #10",
-        category: "Programming & DSA",
-        defaultHref: "pages/07-data-structure-and-algorithms.html",
-        subtopics: [
-          "Time & Space Complexity (Big-O, Omega, Theta)",
-          "Stacks, Queues, Linked Lists & Hashing",
-          "Trees (Binary, BST, AVL, B-Tree) & Graph Traversals",
-          "Sorting & Searching Algorithms"
-        ]
-      },
-      {
-        id: 8,
-        numLabel: "8",
-        rawTitle: "8. Software Engineering",
-        title: "Software Engineering",
-        combinedFrom: "Original Topic #11",
-        category: "Programming & DSA",
-        defaultHref: "pages/08-software-engineering.html",
-        subtopics: [
-          "SDLC Models (Waterfall, Agile, Spiral, Prototype)",
-          "SRS, DFD & Requirement Engineering",
-          "Software Design, Cohesion & Coupling",
-          "Testing Levels (Unit, Integration, System) & Metrics"
-        ]
-      },
-      {
-        id: 9,
-        numLabel: "9",
-        rawTitle: "9. Computer Fundamentals & MS Office",
-        title: "Computer Fundamentals & MS Office",
-        combinedFrom: "Original Topic #12",
-        category: "Systems & Hardware",
-        defaultHref: "pages/09-computer-fundamentals-and-ms-office.html",
-        subtopics: [
-          "Generations of Computers & Input/Output Devices",
-          "Primary vs Secondary Memory Hierarchy",
-          "MS Word Shortcuts, Mail Merge & Page Formatting",
-          "MS Excel Formulas, Functions, Charts & PowerPoint"
-        ]
-      },
-      {
-        id: 10,
-        numLabel: "10",
-        rawTitle: "10. Computer Organisation & Architecture",
-        title: "Computer Organisation & Architecture",
-        combinedFrom: "Original Topic #13",
-        category: "Systems & Hardware",
-        defaultHref: "pages/10-computer-organisation-and-architecture.html",
-        subtopics: [
-          "Register Transfer Language & Micro-operations",
-          "Instruction Cycle, Addressing Modes & RISC vs CISC",
-          "Instruction Pipelining & Pipeline Hazards",
-          "Cache Memory Mapping, Interrupts & DMA"
-        ]
-      },
-      {
-        id: 11,
-        numLabel: "11",
-        rawTitle: "11. Cyber Security, Cryptography & Cyber Laws",
-        title: "Cyber Security, Cryptography & Cyber Laws",
-        combinedFrom: "Original Topic #14",
-        category: "Data & Web",
-        defaultHref: "pages/11-cyber-security-cryptography-and-cyber-laws.html",
-        subtopics: [
-          "CIA Triad, Malware, Phishing & Firewalls",
-          "Symmetric (AES, DES) & Asymmetric (RSA) Encryption",
-          "Digital Signatures & Hash Functions (SHA, MD5)",
-          "Indian IT Act 2000 & Cyber Offences"
-        ]
-      },
-      {
-        id: 12,
-        numLabel: "12",
-        rawTitle: "12. Web Technologies",
-        title: "Web Technologies",
-        combinedFrom: "Original Topic #15",
-        category: "Data & Web",
-        defaultHref: "pages/12-web-technologies.html",
-        subtopics: [
-          "HTML5 Elements, Forms & Semantic Markup",
-          "CSS3 Selectors, Box Model & Responsive Design",
-          "JavaScript DOM Manipulation & Event Handling",
-          "XML, JSON, HTTP Status Codes & Client-Server Architecture"
-        ]
-      },
-      {
-        id: 13,
-        numLabel: "13",
-        rawTitle: "13. Computer Graphics, Multimedia & Mobile Computing",
-        title: "Computer Graphics, Multimedia & Mobile Computing",
-        combinedFrom: "Original Topic #16",
-        category: "Data & Web",
-        defaultHref: "pages/13-computer-graphics-multimedia-and-mobile.html",
-        subtopics: [
-          "DDA & Bresenham Line/Circle Drawing Algorithms",
-          "2D/3D Transformations & Viewing/Clipping Algorithms",
-          "Multimedia File Formats & Compression (JPEG, MPEG)",
-          "GSM, CDMA, Mobile IP & Cellular Network Generations"
-        ]
-      },
-      {
-        id: 14,
-        numLabel: "14",
-        rawTitle: "14. MIS, DSS, Expert Systems, KM & Commerce",
-        title: "MIS, DSS, Expert Systems, KM & Commerce",
-        combinedFrom: "Combined: 17. MIS, DSS, Expert Systems & KM + 18. Commerce",
-        category: "Allied & Maths",
-        defaultHref: "pages/14-mis-dss-km-and-commerce.html",
-        subtopics: [
-          "Management Information Systems (TPS, MIS, DSS, EIS)",
-          "Expert Systems, Inference Engine, Knowledge Management & OLAP",
-          "E-Commerce Models (B2B, B2C, C2C), EDI & Payment Gateways",
-          "Commerce & Accounting Essentials (Journal, Ledger, Trial Balance)"
-        ]
-      },
-      {
-        id: 15,
-        numLabel: "15",
-        rawTitle: "15. Engineering Maths",
-        title: "Engineering Maths",
-        combinedFrom: "Original Topic #19",
-        category: "Allied & Maths",
-        defaultHref: "pages/15-engineering-maths.html",
-        subtopics: [
-          "Matrices, Determinants, Rank & Eigenvalues",
-          "Set Theory, Relations, Functions & Propositional Logic",
-          "Probability, Permutations & Combinations",
-          "Differential & Integral Calculus Essentials"
-        ]
-      },
-      {
-        id: 16,
-        numLabel: "16",
-        rawTitle: "16. Physics",
-        title: "Physics",
-        combinedFrom: "Original Topic #20",
-        category: "Allied & Maths",
-        defaultHref: "pages/16-physics.html",
-        subtopics: [
-          "Semiconductor Physics, P-N Junction Diodes & Transistors",
-          "Electrostatics, Current Electricity & Magnetism",
-          "Optics, Lasers & Optical Fiber Principles",
-          "Modern Physics & Electronic Measurements"
-        ]
-      }
-    ];
-
-    const STORAGE_KEY = "dsssb_tgt_cs_portal_state_v2_16mod";
-
-    let appState = {
-      darkMode: false,
-      viewMode: "grid", // 'grid' | 'list'
-      activeFilter: "all",
-      searchQuery: "",
-      activeTopicId: null, // null = Home Directory, 1..20 = Topic Detail View
-      topicData: {} // keyed by id: { status, bookmarked, customHref, notes }
-    };
-
-    function loadState() {
-      DEFAULT_TOPICS.forEach((t) => {
-        appState.topicData[t.id] = {
-          status: "not_started",
-          bookmarked: false,
-          customHref: t.defaultHref,
-          notes: ""
-        };
-      });
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (typeof parsed.darkMode === "boolean") appState.darkMode = parsed.darkMode;
-          if (parsed.viewMode === "grid" || parsed.viewMode === "list") appState.viewMode = parsed.viewMode;
-          if (parsed.topicData && typeof parsed.topicData === "object") {
-            DEFAULT_TOPICS.forEach((t) => {
-              if (parsed.topicData[t.id]) {
-                appState.topicData[t.id] = {
-                  ...appState.topicData[t.id],
-                  ...parsed.topicData[t.id]
-                };
-              }
-            });
-          }
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        
+        // Check for saved user preference in localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateToggleUI('dark');
         }
-      } catch (e) {
-        // Ignore storage errors in sandboxed iframes
-      }
-    }
 
-    function saveState() {
-      try {
-        localStorage.setItem(
-          STORAGE_KEY,
-          JSON.stringify({
-            darkMode: appState.darkMode,
-            viewMode: appState.viewMode,
-            topicData: appState.topicData
-          })
-        );
-      } catch (e) {
-        // Ignore storage errors
-      }
-    }
-
-    function showToast(msg) {
-      const box = document.getElementById("toastBox");
-      box.textContent = msg;
-      box.classList.remove("hidden");
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => {
-        box.classList.add("hidden");
-      }, 2200);
-    }
-
-    function copyTextToClipboard(text, successMsg) {
-      const fallbackCopy = () => {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        try {
-          document.execCommand("copy");
-          showToast(successMsg || "Copied to clipboard!");
-        } catch (err) {
-          showToast("Copy failed");
-        }
-        document.body.removeChild(ta);
-      };
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(
-          () => showToast(successMsg || "Copied to clipboard!"),
-          () => fallbackCopy()
-        );
-      } else {
-        fallbackCopy();
-      }
-    }
-
-    function applyTheme() {
-      const root = document.documentElement;
-      if (appState.darkMode) {
-        root.classList.add("dark");
-      } else {
-        root.classList.remove("dark");
-      }
-    }
-
-    function getFilteredTopics() {
-      const q = appState.searchQuery.trim().toLowerCase();
-      return DEFAULT_TOPICS.filter((t) => {
-        const meta = appState.topicData[t.id];
-        if (appState.activeFilter === "bookmarked" && !meta.bookmarked) return false;
-        if (
-          appState.activeFilter !== "all" &&
-          appState.activeFilter !== "bookmarked" &&
-          t.category !== appState.activeFilter
-        ) {
-          return false;
-        }
-        if (!q) return true;
-        const matchTitle = t.rawTitle.toLowerCase().includes(q) || t.title.toLowerCase().includes(q);
-        const matchNum = t.numLabel === q || (`topic ${t.numLabel}`).includes(q);
-        const matchCat = t.category.toLowerCase().includes(q);
-        const matchSub = t.subtopics.some((s) => s.toLowerCase().includes(q));
-        return matchTitle || matchNum || matchCat || matchSub;
-      });
-    }
-
-    function getStatusBadge(status) {
-      if (status === "completed") {
-        return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-300">✓ Completed</span>`;
-      }
-      if (status === "in_progress") {
-        return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-700 dark:bg-amber-950/80 dark:text-amber-300">● In Progress</span>`;
-      }
-      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400">Not Started</span>`;
-    }
-
-    function renderSidebar() {
-      const listEl = document.getElementById("sidebarLinksList");
-      listEl.innerHTML = "";
-
-      let completedCount = 0;
-      let bookmarkedCount = 0;
-
-      DEFAULT_TOPICS.forEach((topic) => {
-        const meta = appState.topicData[topic.id];
-        if (meta.status === "completed") completedCount++;
-        if (meta.bookmarked) bookmarkedCount++;
-
-        const isActive = appState.activeTopicId === topic.id;
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = `w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-left text-xs font-medium transition ${
-          isActive
-            ? "bg-indigo-600 text-white shadow-xs"
-            : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80"
-        }`;
-
-        const statusDot =
-          meta.status === "completed"
-            ? `<span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0" title="Completed"></span>`
-            : meta.status === "in_progress"
-            ? `<span class="w-2 h-2 rounded-full bg-amber-400 shrink-0" title="In Progress"></span>`
-            : `<span class="w-1.5 h-1.5 rounded-full ${isActive ? "bg-indigo-300" : "bg-slate-300 dark:bg-slate-700"} shrink-0"></span>`;
-
-        btn.innerHTML = `
-          <div class="flex items-center gap-2.5 min-w-0">
-            <span class="font-mono text-[11px] px-1.5 py-0.5 rounded ${
-              isActive
-                ? "bg-indigo-700 text-indigo-100"
-                : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-            }">${topic.numLabel.padStart(2, "0")}</span>
-            <span class="truncate">${topic.rawTitle}</span>
-          </div>
-          <div class="flex items-center gap-1.5 shrink-0">
-            ${meta.bookmarked ? `<span class="${isActive ? "text-amber-200" : "text-amber-400"}">★</span>` : ""}
-            ${statusDot}
-          </div>
-        `;
-
-        btn.addEventListener("click", () => {
-          openTopicDetail(topic.id);
-          closeMobileSidebar();
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('theme', targetTheme); // Save preference
+            
+            updateToggleUI(targetTheme);
         });
 
-        listEl.appendChild(btn);
-      });
-
-      const pct = Math.round((completedCount / DEFAULT_TOPICS.length) * 100);
-      document.getElementById("sidebarProgressText").textContent = `${completedCount} / ${DEFAULT_TOPICS.length} Done`;
-      document.getElementById("sidebarProgressBar").style.width = `${pct}%`;
-      document.getElementById("heroCompletedCount").textContent = `${completedCount} / ${DEFAULT_TOPICS.length}`;
-      document.getElementById("heroBookmarkedCount").textContent = String(bookmarkedCount);
-    }
-
-    function renderFilterPills() {
-      const buttons = document.querySelectorAll(".filter-btn");
-      buttons.forEach((btn) => {
-        const filterVal = btn.getAttribute("data-filter");
-        if (filterVal === appState.activeFilter) {
-          btn.className = "filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition shrink-0";
-        } else {
-          btn.className = "filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition shrink-0";
+        function updateToggleUI(theme) {
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light Mode';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark Mode';
+            }
         }
-      });
-
-      const gridBtn = document.getElementById("gridViewBtn");
-      const listBtn = document.getElementById("listViewBtn");
-      if (appState.viewMode === "grid") {
-        gridBtn.className = "px-2.5 py-1 rounded-md text-xs font-medium bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs transition";
-        listBtn.className = "px-2.5 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition";
-      } else {
-        listBtn.className = "px-2.5 py-1 rounded-md text-xs font-medium bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs transition";
-        gridBtn.className = "px-2.5 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition";
-      }
-    }
-
-    function renderHomeTopics() {
-      const container = document.getElementById("topicsContainer");
-      const emptyState = document.getElementById("emptyState");
-      const filtered = getFilteredTopics();
-
-      document.getElementById("showingCountLabel").textContent = `Showing ${filtered.length} of ${DEFAULT_TOPICS.length} topics`;
-
-      if (filtered.length === 0) {
-        container.classList.add("hidden");
-        emptyState.classList.remove("hidden");
-        return;
-      }
-
-      container.classList.remove("hidden");
-      emptyState.classList.add("hidden");
-
-      if (appState.viewMode === "grid") {
-        container.className = "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4";
-      } else {
-        container.className = "flex flex-col gap-2.5";
-      }
-
-      container.innerHTML = "";
-
-      filtered.forEach((topic) => {
-        const meta = appState.topicData[topic.id];
-        const card = document.createElement("div");
-
-        if (appState.viewMode === "grid") {
-          card.className =
-            "group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500/60 dark:hover:border-indigo-500/60 p-5 shadow-xs hover:shadow-md transition flex flex-col justify-between";
-
-          card.innerHTML = `
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-3">
-                <div class="flex items-center gap-2">
-                  <span class="px-2.5 py-1 rounded-lg font-mono text-xs font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-950/90 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900">
-                    #${topic.numLabel.padStart(2, "0")}
-                  </span>
-                  <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400">${topic.category}</span>
-                </div>
-                <div class="flex items-center gap-1">
-                  ${getStatusBadge(meta.status)}
-                  <button type="button" data-bookmark="${topic.id}" aria-label="Bookmark ${topic.title}" class="p-1 rounded-lg text-sm ${
-                    meta.bookmarked ? "text-amber-400" : "text-slate-300 dark:text-slate-600 hover:text-amber-400"
-                  } transition">
-                    ★
-                  </button>
-                </div>
-              </div>
-
-              <button type="button" data-open="${topic.id}" class="text-left w-full group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
-                <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
-                  ${topic.rawTitle}
-                </h3>
-              </button>
-              ${topic.combinedFrom && topic.combinedFrom.startsWith("Combined:") ? `<div class="mt-1 inline-block text-[11px] font-medium px-2 py-0.5 rounded bg-violet-50 text-violet-700 dark:bg-violet-950/70 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/60">${topic.combinedFrom}</div>` : `<div class="mt-1 text-[11px] text-slate-400 dark:text-slate-500">${topic.combinedFrom || ""}</div>`}
-
-              <p class="mt-1.5 text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
-                ${topic.subtopics.join(" • ")}
-              </p>
-            </div>
-
-            <div class="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2">
-              <code class="text-[11px] font-mono text-slate-400 dark:text-slate-500 truncate max-w-[180px]" title="${meta.customHref}">
-                ${meta.customHref}
-              </code>
-              <div class="flex items-center gap-1.5 shrink-0">
-                <button type="button" data-cycle-status="${topic.id}" class="px-2.5 py-1 rounded-lg text-xs font-medium border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Cycle study status">
-                  Status
-                </button>
-                <button type="button" data-open="${topic.id}" class="px-3 py-1 rounded-lg text-xs font-semibold bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white transition">
-                  Open Link &rarr;
-                </button>
-              </div>
-            </div>
-          `;
-        } else {
-          // Compact Navigation List Row
-          card.className =
-            "bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500/60 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition";
-
-          card.innerHTML = `
-            <div class="flex items-center gap-3 min-w-0">
-              <span class="px-2.5 py-1 rounded-lg font-mono text-xs font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 shrink-0">
-                #${topic.numLabel.padStart(2, "0")}
-              </span>
-              <div class="min-w-0">
-                <button type="button" data-open="${topic.id}" class="text-left font-bold text-sm text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 truncate block">
-                  ${topic.rawTitle}
-                </button>
-                <span class="text-xs font-mono text-slate-400 dark:text-slate-500">${meta.customHref}</span>
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0">
-              ${getStatusBadge(meta.status)}
-              <button type="button" data-bookmark="${topic.id}" class="p-1.5 rounded-lg text-sm ${
-                meta.bookmarked ? "text-amber-400" : "text-slate-300 dark:text-slate-600 hover:text-amber-400"
-              }">★</button>
-              <button type="button" data-open="${topic.id}" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition">
-                Navigate &rarr;
-              </button>
-            </div>
-          `;
-        }
-
-        container.appendChild(card);
-      });
-
-      // Attach listeners for dynamic buttons inside cards
-      container.querySelectorAll("[data-open]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const id = Number(btn.getAttribute("data-open"));
-          openTopicDetail(id);
-        });
-      });
-
-      container.querySelectorAll("[data-bookmark]").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const id = Number(btn.getAttribute("data-bookmark"));
-          appState.topicData[id].bookmarked = !appState.topicData[id].bookmarked;
-          saveState();
-          renderAll();
-        });
-      });
-
-      container.querySelectorAll("[data-cycle-status]").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const id = Number(btn.getAttribute("data-cycle-status"));
-          const order = ["not_started", "in_progress", "completed"];
-          const cur = appState.topicData[id].status;
-          const next = order[(order.indexOf(cur) + 1) % order.length];
-          appState.topicData[id].status = next;
-          saveState();
-          renderAll();
-        });
-      });
-    }
-
-    function openTopicDetail(topicId) {
-      appState.activeTopicId = topicId;
-      renderAll();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function renderTopicDetail() {
-      const homeView = document.getElementById("homeView");
-      const detailView = document.getElementById("topicDetailView");
-
-      if (!appState.activeTopicId) {
-        homeView.classList.remove("hidden");
-        detailView.classList.add("hidden");
-        return;
-      }
-
-      homeView.classList.add("hidden");
-      detailView.classList.remove("hidden");
-
-      const topic = DEFAULT_TOPICS.find((t) => t.id === appState.activeTopicId);
-      if (!topic) return;
-      const meta = appState.topicData[topic.id];
-
-      document.getElementById("detailBreadcrumbNumber").textContent = `Topic #${topic.numLabel}`;
-      document.getElementById("detailBreadcrumbTitle").textContent = topic.title;
-      document.getElementById("detailBadgeNumber").textContent = `Topic ${topic.numLabel.padStart(2, "0")}`;
-      document.getElementById("detailBadgeCategory").textContent = topic.category;
-      document.getElementById("detailTitle").textContent = topic.rawTitle;
-      document.getElementById("detailSubtext").textContent = `${topic.combinedFrom} — Page stub ready to link. Configure your target HTML filename below or add quick revision pointers for this module.`;
-
-      const statusSelect = document.getElementById("detailStatusSelect");
-      statusSelect.value = meta.status;
-
-      const bookmarkBtn = document.getElementById("detailBookmarkBtn");
-      bookmarkBtn.textContent = meta.bookmarked ? "★ Bookmarked" : "☆ Bookmark";
-      bookmarkBtn.className = `px-3 py-2 rounded-xl text-xs font-semibold border transition ${
-        meta.bookmarked
-          ? "border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-700 dark:bg-amber-950/50 dark:text-amber-300"
-          : "border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
-      }`;
-
-      const urlInput = document.getElementById("customUrlInput");
-      urlInput.value = meta.customHref;
-
-      const anchorCode = `<a href="${meta.customHref}">${topic.rawTitle}</a>`;
-      document.getElementById("anchorCodePreview").textContent = anchorCode;
-
-      const subList = document.getElementById("detailSubtopicsList");
-      subList.innerHTML = "";
-      topic.subtopics.forEach((sub) => {
-        const li = document.createElement("li");
-        li.className = "flex items-start gap-2 p-2 rounded-lg bg-slate-50 dark:bg-slate-800/50";
-        li.innerHTML = `<span class="text-indigo-500 font-bold">&bull;</span><span>${sub}</span>`;
-        subList.appendChild(li);
-      });
-
-      document.getElementById("detailNotesInput").value = meta.notes || "";
-    }
-
-    function renderAll() {
-      applyTheme();
-      renderSidebar();
-      renderFilterPills();
-      renderHomeTopics();
-      renderTopicDetail();
-    }
-
-    function openMobileSidebar() {
-      const sb = document.getElementById("sidebarNav");
-      const bd = document.getElementById("sidebarBackdrop");
-      sb.classList.remove("-translate-x-full");
-      bd.classList.remove("hidden");
-    }
-
-    function closeMobileSidebar() {
-      const sb = document.getElementById("sidebarNav");
-      const bd = document.getElementById("sidebarBackdrop");
-      sb.classList.add("-translate-x-full");
-      bd.classList.add("hidden");
-    }
-
-    function generateFullHtmlMenuSnippet() {
-      const lines = [
-        `<!-- DSSSB TGT CS Paper 2: Computer Science & Subject Specific Navigation -->`,
-        `<nav aria-label="DSSSB TGT CS Paper 2 Topics">`,
-        `  <ul>`
-      ];
-      DEFAULT_TOPICS.forEach((t) => {
-        const href = appState.topicData[t.id].customHref;
-        lines.push(`    <li><a href="${href}">${t.rawTitle}</a></li>`);
-      });
-      lines.push(`  </ul>`);
-      lines.push(`</nav>`);
-      return lines.join("\n");
-    }
-
-    // Initialize Event Listeners
-    window.addEventListener("DOMContentLoaded", () => {
-      loadState();
-      renderAll();
-
-      document.getElementById("mobileMenuBtn").addEventListener("click", () => {
-        const sb = document.getElementById("sidebarNav");
-        if (sb.classList.contains("-translate-x-full")) {
-          openMobileSidebar();
-        } else {
-          closeMobileSidebar();
-        }
-      });
-
-      document.getElementById("sidebarBackdrop").addEventListener("click", closeMobileSidebar);
-
-      document.getElementById("brandHomeBtn").addEventListener("click", () => {
-        appState.activeTopicId = null;
-        renderAll();
-      });
-
-      document.getElementById("homeNavResetBtn").addEventListener("click", () => {
-        appState.activeTopicId = null;
-        appState.activeFilter = "all";
-        appState.searchQuery = "";
-        document.getElementById("searchInput").value = "";
-        document.getElementById("clearSearchBtn").classList.add("hidden");
-        closeMobileSidebar();
-        renderAll();
-      });
-
-      document.getElementById("themeToggleBtn").addEventListener("click", () => {
-        appState.darkMode = !appState.darkMode;
-        saveState();
-        applyTheme();
-      });
-
-      const searchInput = document.getElementById("searchInput");
-      const clearSearchBtn = document.getElementById("clearSearchBtn");
-
-      searchInput.addEventListener("input", (e) => {
-        appState.searchQuery = e.target.value;
-        if (appState.activeTopicId !== null) {
-          appState.activeTopicId = null;
-        }
-        clearSearchBtn.classList.toggle("hidden", !appState.searchQuery);
-        renderAll();
-      });
-
-      clearSearchBtn.addEventListener("click", () => {
-        appState.searchQuery = "";
-        searchInput.value = "";
-        clearSearchBtn.classList.add("hidden");
-        renderAll();
-      });
-
-      document.querySelectorAll(".filter-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          appState.activeFilter = btn.getAttribute("data-filter");
-          renderAll();
-        });
-      });
-
-      document.getElementById("resetFiltersBtn").addEventListener("click", () => {
-        appState.activeFilter = "all";
-        appState.searchQuery = "";
-        searchInput.value = "";
-        clearSearchBtn.classList.add("hidden");
-        renderAll();
-      });
-
-      document.getElementById("gridViewBtn").addEventListener("click", () => {
-        appState.viewMode = "grid";
-        saveState();
-        renderAll();
-      });
-
-      document.getElementById("listViewBtn").addEventListener("click", () => {
-        appState.viewMode = "list";
-        saveState();
-        renderAll();
-      });
-
-      // Detail View Controls
-      document.getElementById("backToHomeBtn").addEventListener("click", () => {
-        appState.activeTopicId = null;
-        renderAll();
-      });
-
-      document.getElementById("prevTopicBtn").addEventListener("click", () => {
-        if (!appState.activeTopicId) return;
-        const prevId = appState.activeTopicId > 1 ? appState.activeTopicId - 1 : DEFAULT_TOPICS.length;
-        openTopicDetail(prevId);
-      });
-
-      document.getElementById("nextTopicBtn").addEventListener("click", () => {
-        if (!appState.activeTopicId) return;
-        const nextId = appState.activeTopicId < DEFAULT_TOPICS.length ? appState.activeTopicId + 1 : 1;
-        openTopicDetail(nextId);
-      });
-
-      document.getElementById("detailStatusSelect").addEventListener("change", (e) => {
-        if (!appState.activeTopicId) return;
-        appState.topicData[appState.activeTopicId].status = e.target.value;
-        saveState();
-        renderAll();
-        showToast("Topic status updated");
-      });
-
-      document.getElementById("detailBookmarkBtn").addEventListener("click", () => {
-        if (!appState.activeTopicId) return;
-        const cur = appState.topicData[appState.activeTopicId].bookmarked;
-        appState.topicData[appState.activeTopicId].bookmarked = !cur;
-        saveState();
-        renderAll();
-      });
-
-      document.getElementById("saveUrlBtn").addEventListener("click", () => {
-        if (!appState.activeTopicId) return;
-        const val = document.getElementById("customUrlInput").value.trim();
-        if (val) {
-          appState.topicData[appState.activeTopicId].customHref = val;
-          saveState();
-          renderAll();
-          showToast("Target page link updated!");
-        }
-      });
-
-      document.getElementById("copySingleAnchorBtn").addEventListener("click", () => {
-        const code = document.getElementById("anchorCodePreview").textContent;
-        copyTextToClipboard(code, "Copied <a> tag!");
-      });
-
-      document.getElementById("saveNotesBtn").addEventListener("click", () => {
-        if (!appState.activeTopicId) return;
-        appState.topicData[appState.activeTopicId].notes = document.getElementById("detailNotesInput").value;
-        saveState();
-        const ind = document.getElementById("noteSavedIndicator");
-        ind.classList.remove("hidden");
-        setTimeout(() => ind.classList.add("hidden"), 2000);
-        showToast("Notes saved for this topic!");
-      });
-
-      // Export HTML Modal
-      const exportModal = document.getElementById("exportModal");
-      document.getElementById("exportLinksBtn").addEventListener("click", () => {
-        document.getElementById("exportCodeBlock").textContent = generateFullHtmlMenuSnippet();
-        exportModal.classList.remove("hidden");
-        exportModal.classList.add("flex");
-      });
-
-      document.getElementById("closeExportModalBtn").addEventListener("click", () => {
-        exportModal.classList.add("hidden");
-        exportModal.classList.remove("flex");
-      });
-
-      exportModal.addEventListener("click", (e) => {
-        if (e.target === exportModal) {
-          exportModal.classList.add("hidden");
-          exportModal.classList.remove("flex");
-        }
-      });
-
-      document.getElementById("copyAllHtmlBtn").addEventListener("click", () => {
-        const snippet = generateFullHtmlMenuSnippet();
-        copyTextToClipboard(snippet, "Copied full HTML navigation list!");
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
