@@ -108,20 +108,23 @@
             line-height: 1.4;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: var(--shadow);
-            cursor: pointer;
         }
 
-        .topic-card:hover {
+        .topic-card:hover, .topic-card:focus-within {
             transform: translateY(-4px);
             box-shadow: var(--shadow-hover);
             border-color: var(--card-hover-border);
             background-color: var(--card-hover-bg);
         }
 
+        /* The link wrapper inside the card */
         .topic-content {
             display: flex;
             align-items: center;
             flex: 1;
+            text-decoration: none;
+            color: inherit;
+            outline: none;
         }
 
         .topic-num {
@@ -141,7 +144,7 @@
             opacity: 0.85;
         }
 
-        .topic-card.completed .topic-content {
+        .topic-card.completed .topic-title {
             text-decoration: line-through;
             opacity: 0.7;
         }
@@ -166,6 +169,7 @@
             transition: all 0.2s ease;
             margin-left: 15px;
             flex-shrink: 0;
+            z-index: 2;
         }
 
         .check-btn:hover {
@@ -200,32 +204,31 @@
     </div>
 
     <div class="grid-container" id="topics-container">
-        <!-- JS will populate cards here to keep HTML clean -->
+        <!-- JS will populate cards here -->
     </div>
 
     <script>
+        // ADD YOUR LINKS HERE: Replace "https://example.com" with the actual URLs you want to navigate to.
         const topics = [
-            "Operating System & Linux Commands",
-            "Computer Network",
-            "Number Systems, Boolean Alg & Digital Elec",
-            "DBMS, ER Modelling & SQL Queries",
-            "Programming in 'C'",
-            "C++, OOPs and Java",
-            "Data Structure and Algorithms",
-            "Software Engineering",
-            "Computer Fundamentals & MS Office",
-            "Computer Organisation & Architecture",
-            "Cyber Security, Cryptography & Cyber Laws",
-            "Web Technologies",
-            "Computer Graphics, Multimedia & Mobile Computing",
-            "MIS, DSS, Expert Systems, KM & Commerce",
-            "Engineering Maths",
-            "Physics"
+            { title: "Operating System & Linux Commands", url: "https://example.com/os-linux" },
+            { title: "Computer Network", url: "https://example.com/computer-network" },
+            { title: "Number Systems, Boolean Alg & Digital Elec", url: "https://example.com/digital-logic" },
+            { title: "DBMS, ER Modelling & SQL Queries", url: "https://example.com/dbms" },
+            { title: "Programming in 'C'", url: "https://example.com/c-programming" },
+            { title: "C++, OOPs and Java", url: "https://example.com/oops-java" },
+            { title: "Data Structure and Algorithms", url: "https://example.com/dsa" },
+            { title: "Software Engineering", url: "https://example.com/software-engineering" },
+            { title: "Computer Fundamentals & MS Office", url: "https://example.com/fundamentals" },
+            { title: "Computer Organisation & Architecture", url: "https://example.com/coa" },
+            { title: "Cyber Security, Cryptography & Cyber Laws", url: "https://example.com/cyber-security" },
+            { title: "Web Technologies", url: "https://example.com/web-tech" },
+            { title: "Computer Graphics, Multimedia & Mobile Computing", url: "https://example.com/graphics" },
+            { title: "MIS, DSS, Expert Systems, KM & Commerce", url: "https://example.com/mis-dss" },
+            { title: "Engineering Maths", url: "https://example.com/maths" },
+            { title: "Physics", url: "https://example.com/physics" }
         ];
 
         const container = document.getElementById('topics-container');
-        
-        // Load saved progress from localStorage
         let completedTopics = JSON.parse(localStorage.getItem('completedTopics')) || [];
 
         // Generate Cards
@@ -233,19 +236,26 @@
             const topicId = `topic-${index + 1}`;
             const num = (index + 1).toString().padStart(2, '0');
             const isCompleted = completedTopics.includes(topicId);
-
+            
             const card = document.createElement('div');
             card.className = `topic-card ${isCompleted ? 'completed' : ''}`;
             card.dataset.id = topicId;
+            
+            // Note: target="_blank" opens the link in a new tab. Remove it if you want it to open in the same tab.
             card.innerHTML = `
-                <div class="topic-content">
-                    <span class="topic-num">${num}</span> ${topic}
-                </div>
-                <button class="check-btn" aria-label="Mark as completed">✔</button>
+                <a href="${topic.url}" target="_blank" class="topic-content">
+                    <span class="topic-num">${num}</span> 
+                    <span class="topic-title">${topic.title}</span>
+                </a>
+                <button class="check-btn" aria-label="Mark as completed" title="Mark as completed">✔</button>
             `;
 
-            // Toggle Completion
-            card.addEventListener('click', () => {
+            // Toggle Completion on Checkmark Click ONLY
+            const checkBtn = card.querySelector('.check-btn');
+            checkBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevents the link from triggering
+                e.preventDefault(); 
+                
                 card.classList.toggle('completed');
                 
                 if (card.classList.contains('completed')) {
